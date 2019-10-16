@@ -45,3 +45,7 @@ get' n xs = helper 0 xs where
  elem' :: (Eq a) => [a] -> a -> Bool
  elem' [] n = False
  elem' (x:xs) n = if x == n then  True  else elem' xs n
+ 
+ zip' _ [] = []
+ zip' [] _ = []
+ zip' (x:xs) (y:ys) = (x,y) : zip' xs ys
