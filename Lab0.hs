@@ -1,7 +1,7 @@
-get' n xs = helper 0 xs where 
-             helper k (x:xs) = if k == n 
-                               then x 
-                               else helper (k+1) xs
+get' xs n = helper xs 0 where 
+            helper (x:xs) k = if k == n 
+                              then x 
+                              else helper xs (k+1)
 
  head' :: [a] -> a
  head' [] = error "empty list"
