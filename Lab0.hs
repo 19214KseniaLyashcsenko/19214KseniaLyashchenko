@@ -34,7 +34,7 @@ get' xs n = helper xs 0 where
  concat' x sys = x ++ sys
 
  drop' n (x:xs) = helper 0 xs where 
-                     helper k (x:xs) = if k == n - 1
+                     helper k (x:xs) = if k == n - 2
                                then xs
                                else helper (k+1) xs
 
