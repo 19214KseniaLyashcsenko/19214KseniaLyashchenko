@@ -57,9 +57,10 @@ drop' n (x:xs)  | (n > 0)  = drop' (n-1) xs
                 | otherwise  = error "Not correct"
                
  -- 11
-take' :: Eq a => Int -> [a] -> [a]
-take' 1 (x:xs) = [x]
-take' n xs = reverse' (drop' ((length' xs) - n ) (reverse' xs))
+take' :: Integer->[a]->[a]
+take' n [] = []
+take' 0 xs = []
+take' n (x:xs) = x : (take' (n-1) xs)
 
 -- 12
 splitAt' :: Int -> [a] -> ([a],[a])
