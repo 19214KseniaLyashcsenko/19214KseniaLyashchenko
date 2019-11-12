@@ -1,8 +1,7 @@
 -- 1
 get' :: [a] -> Int -> a
 get' [] _ = error "Empty List"
-get' (x:xs) n | (n == 0) = x
-              | otherwise = get' xs (n - 1)
+get' (x:xs) n = if n > 0 then  get' (xs) (n-1) else (x)
 
 -- 2
 head' :: [a] -> a
