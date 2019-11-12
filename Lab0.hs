@@ -9,9 +9,10 @@ head' [] = error "empty list"
 head' (x:xs) = x
 
 -- 3
-last' :: Eq a => [a] -> a
-last' [] = error "Empty List"
-last' (x:xs) = if xs == [] then x else (last' xs)
+last' :: [a] -> a
+last' [] = error "Empty list"
+last' (x:[]) = x
+last' (x:xs) = last xs
 
 -- 4
 tail' :: [a] -> [a]
@@ -25,14 +26,14 @@ init' [x] = []
 init' (x:xs) = x : (init' xs)
 
 --6
-reverse' :: Eq a => [a] -> [a]
-reverse'  [] = []
-reverse'  xs = last' xs : reverse' (init' xs)
+reverse' :: [a] -> [a]
+reverse' xs = foldl (\x y -> y:x) [] xs 
 
 --7
-length' :: [a] -> Int
-length' [] = 0
-length' (x:xs) = 1 + length' xs
+length':: [a] -> Integer
+length' xs = helper 0 xs where 
+             helper n [] = n
+             helper n (x:xs) = helper (n+1) xs
 
 -- 8
  -- Есть еще такой вариант, выбирайте какой вам больше нравится)
@@ -49,12 +50,11 @@ concat' [] ys = ys
 concat' (x:xs) ys = x : (concat' xs ys)  
 
 -- 10
-drop' :: Int -> [a] -> [a]
-drop' _ [] = error "Empty List"
-drop' n (x:xs) | (length' xs == n) = []
-               | (length' xs < n-1) = error "n is bigger then list"
-               | (n == 1) = xs
-               | otherwise = drop' (n-1) xs
+drop' :: Integer -> [a] -> [a]
+drop' 0 xs   =   xs
+drop' _ []   =   []
+drop' n (x:xs)  | (n > 0)  = drop' (n-1) xs 
+                | otherwise  = error "Not correct"
                
  -- 11
 take' :: Eq a => Int -> [a] -> [a]
@@ -75,6 +75,17 @@ null' (xs) = True
 elem' :: (Eq a) => [a] -> a -> Bool
 elem' [] n = False
 elem' (x:xs) n = if x == n then  True  else elem' xs n
+
+--15
+filter' :: (a -> Bool) -> [a] -> [a]
+filter' _ []  =  []
+filter' test (x:xs)  | (test x == True)  =  x:(filter' test xs)
+                     | otherwise   =  filter' test xs
+
+--16
+map' :: (a -> b) -> [a] -> [b]
+map' f []      =  []
+map' f (x:xs)  =  (f x):(map' f xs)                    
  
  -- 17
 zip' _ [] = []
