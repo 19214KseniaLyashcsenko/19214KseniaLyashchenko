@@ -1,5 +1,5 @@
 -- 1
-get' :: [a] -> Int -> a
+get' :: [a] -> Integer -> a
 get' [] _ = error "Empty List"
 get' (x:xs) n = if n > 0 then  get' (xs) (n-1) else (x)
 
