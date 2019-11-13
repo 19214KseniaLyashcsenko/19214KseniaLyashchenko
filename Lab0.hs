@@ -63,7 +63,7 @@ take' 0 xs = []
 take' n (x:xs) = x : (take' (n-1) xs)
 
 -- 12
-splitAt' :: Int -> [a] -> ([a],[a])
+splitAt' :: Integer -> [a] -> ([a],[a])
 splitAt' n xs  | (length xs < n ) = error "n is bigger than lenght of list"
                | otherwise = (take (n-1) (xs), drop (n-1) (xs))
  
