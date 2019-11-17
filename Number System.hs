@@ -2,15 +2,17 @@ import Data.Char
  
 toDecimal :: Int -> String -> String
 toDecimal base snumber = if (base <= 1 || base > 62) then error "Incorrect base" 
-                      else helper base snumber  0
+                      else show (foldl (\num x -> num * base + number x ) 0 snumber)
                       where 
-                      helper b [] c = show c
-                      helper b s c = helper b (tail s) (b * c + number (head s))
                       number x =  if x >= '0' && x <= '9' then (ord x - 48)
                                   else if x >= 'a' && x <= 'z' then (ord x - 87)
                                   else (ord x - 55)
 
 fromDecimal:: Int -> String -> String
+fromDecimal 1 snumber = helper (read snumber::Int) []
+                        where helper 0 num = num
+                              helper snumber num = helper (snumber - 1) ('1':num)
+
 fromDecimal toBase snumber = if toBase > 61 || toBase < 1 then error "Wrong Base" 
                              else helper toBase (read snumber::Int) []
                                    where 
