@@ -1,0 +1,31 @@
+data MusicBand = MusicBand {
+                            nameBand::String,
+                            albums:: [String],
+                            songs:: [String]
+                            } deriving Show
+
+data Song = Song { 
+                    nameSong:: String
+                  } deriving Show
+
+data Album = Album { 
+                     nameAlbum::String,
+                     albumSongs:: [String]
+                    } deriving Show
+
+data User = User {
+                  nameUser:: String,
+                  userMusicBands:: [String],
+                  userAlbums:: [String],
+                  userSongs::[String]            
+                  } deriving Show
+
+
+addMusicBand :: User -> MusicBand -> User
+addMusicBand (User nameU musicBandsU albumsU songsU) (MusicBand nameM albumsM songsM) = User nameU (nameM:musicBandsU) (albumsM ++ albumsU) (songsM ++ songsU)
+
+addAlbum :: User -> Album -> User
+addAlbum (User nameU musicBandsU albumsU songsU) (Album nameA songsA) = User nameU musicBandsU (nameA : albumsU) (songsA ++ songsU)
+
+addSong :: User -> Song -> User
+addSong (User nameU musicBandsU albumsU songsU) (Song nameS) = User nameU musicBandsU albumsU (nameS : songsU)
