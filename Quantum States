@@ -1,0 +1,40 @@
+data Complex a = Complex a a
+
+instance (Eq a) => Eq (Complex a) where
+ (==) (Complex r1 i1) (Complex r2 i2) = (r1 == r2) && (i1 == i2)
+
+instance (Show a) => Show (Complex a) where
+ (show) (Complex r i) = (show r) ++ " " ++ (show i) ++ "i" 
+
+
+
+data QuantymState a = QuantymState a String
+
+instance (Eq a) => Eq (QuantymState a) where
+ (==) (QuantymState complex1 label1) (QuantymState complex2 label2) = (complex1 == complex2) && (label1 == label2) 
+
+instance (Show a) => Show (QuantymState a) where
+ (show) (QuantymState complex label) = (show complex) ++ " " ++ (show label) 
+
+instance Functor QuantymState where
+    fmap func (QuantymState complex label) = QuantymState (func complex) label
+
+
+
+type Qubit a = [QuantymState a]
+
+toList:: Qubit a -> [a]
+toList [] = []
+toList ((QuantymState complex _ ):xs) = (complex : (toList xs))
+
+toLabelList::Qubit a->String
+toLabelList [] = []
+toLabelList ((QuantymState _ label) : xs) = label
+
+fromList:: [a]->[String]->Qubit a
+fromList [] [] = []
+fromList (x:xs)(y:ys) = (QuantymState x y) : (fromList xs ys)
+
+toPairList:: Qubit a->[(a,String)]
+toPairList [] = []
+toPairList ((QuantymState complex label):xs) = (complex,label):(toPairList xs)
