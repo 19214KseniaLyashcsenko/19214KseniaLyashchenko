@@ -23,13 +23,13 @@ instance Functor QuantymState where
 
 type Qubit a = [QuantymState a]
 
-toList:: Qubit a -> [a]
+toList:: Qubit a -> [Complex a]
 toList [] = []
-toList ((QuantymState complex _ ):xs) = (complex : (toList xs))
+toList ((QuantymState complex _ ):xs) = (complex : (toList xs)) 
 
-toLabelList::Qubit a->String
+toLabelList::Qubit a -> [String]
 toLabelList [] = []
-toLabelList ((QuantymState _ label) : xs) = label
+toLabelList ((QuantymState _ label) : xs) = (label : (toLabelList xs))
 
 fromList:: [a]->[String]->Qubit a
 fromList [] [] = []
@@ -38,3 +38,9 @@ fromList (x:xs)(y:ys) = (QuantymState x y) : (fromList xs ys)
 toPairList:: Qubit a->[(a,String)]
 toPairList [] = []
 toPairList ((QuantymState complex label):xs) = (complex,label):(toPairList xs)
+
+fromPairList:: [(a,String)] -> Qubit a
+fromPairList [] = []
+fromPairList ((x,y) : xs) = (QuantymState x y) : (fromPairList xs)
+
+-- To be continued...
