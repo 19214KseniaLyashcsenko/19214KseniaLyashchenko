@@ -1,7 +1,9 @@
 import Data.Char
  
 toDecimal :: Int -> String -> String
+toDecimal 1 snumber = 
 toDecimal base snumber = if (base <= 1 || base > 62) then error "Incorrect base" 
+                      else if any (\x -> (number x) >= base) snumber then error "Wrong number"
                       else show (foldl (\num x -> num * base + number x ) 0 snumber)
                       where 
                       number x =  if x >= '0' && x <= '9' then (ord x - 48)
