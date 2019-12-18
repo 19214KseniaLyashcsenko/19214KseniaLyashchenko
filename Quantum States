@@ -44,4 +44,5 @@ fromPairList pairs = [ (QuantymState x y) | (x,y) <- pairs]
 --scalarProduct [] [] = 0
 --scalarProduct ((QuantymState complex1 _) : xs) ((QuantymState complex2 _) : yx) = complex1 * complex2 + (scalarProduct xs ys)
 
--- To be continued...
+--entagle:: Qubit (Complex a) -> Qubit (Complex a) -> Qubit (Complex a)
+--entagle qub1 qub2 = [(QuantymState (complex1*complex2) (label1 ++ label2)) | ---(QuantymState complex1 label1) <- qub1, (QuantymState complex2 label2) <- qub2]
