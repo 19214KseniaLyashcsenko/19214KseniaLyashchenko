@@ -6,11 +6,9 @@ instance (Eq a) => Eq (Complex a) where
 instance (Show a) => Show (Complex a) where
  (show) (Complex r i) = (show r) ++ " " ++ (show i) ++ "i" 
 
-instance (Num a) => Num (Complex a) where
- (*) (Complex r1 i1) (Complex r2 i2) = Complex (r1*r2) (i1*i2)
- (+) (Complex r1 i1) (Complex r2 i2) = Complex (r1+r2) (i1+i2)
-
-
+--instance (Num a) => Num (Complex a) where
+ --(*) (Complex r1 i1) (Complex r2 i2) = Complex (r1*r2) (i1*i2)
+ --(+) (Complex r1 i1) (Complex r2 i2) = Complex (r1+r2) (i1+i2)
 
 data QuantymState a = QuantymState a String
 
@@ -28,27 +26,22 @@ instance Functor QuantymState where
 type Qubit a = [QuantymState a]
 
 toList:: Qubit (Complex a) -> [Complex a]
-toList [] = []
-toList ((QuantymState complex _ ):xs) = (complex : (toList xs)) 
+toList qub = [x | (QuantymState x y) <- qub]
 
 toLabelList::Qubit (Complex a) -> [String]
-toLabelList [] = []
-toLabelList ((QuantymState _ label) : xs) = (label : (toLabelList xs))
+toLabelList qub = [ y | (QuantymState x y) <- qub]
 
 fromList:: [Complex a]->[String]->Qubit (Complex a)
-fromList [] [] = []
-fromList (x:xs)(y:ys) = (QuantymState x y) : fromList xs ys
+fromList com str = [(QuantymState x y) | x <- com, y <-str]
 
 toPairList:: Qubit (Complex a)->[(Complex a,String)]
-toPairList [] = []
-toPairList ((QuantymState complex label):xs) = (complex,label):(toPairList xs)
+toPairList qub = [(com,str) | (QuantymState com str) <- qub]
 
 fromPairList:: [(Complex a,String)] -> Qubit (Complex a)
-fromPairList [] = []
-fromPairList ((x,y) : xs) = (QuantymState x y) : (fromPairList xs)
+fromPairList pairs = [ (QuantymState x y) | (x,y) <- pairs]
 
-scalarProduct:: Qubit (Complex a) ->Qubit (Complex a) -> a
-scalarProduct [] [] = 0
-scalarProduct ((QuantymState complex1 _) : xs) ((QuantymState complex2 _) : yx) = complex1 * complex2 + (scalarProduct xs ys)
+--scalarProduct:: Qubit (Complex a) ->Qubit (Complex a) -> a
+--scalarProduct [] [] = 0
+--scalarProduct ((QuantymState complex1 _) : xs) ((QuantymState complex2 _) : yx) = complex1 * complex2 + (scalarProduct xs ys)
 
 -- To be continued...
