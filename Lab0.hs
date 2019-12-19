@@ -26,8 +26,15 @@ init' [x] = []
 init' (x:xs) = x : (init' xs)
 
 --6
+
 reverse' :: [a] -> [a]
-reverse' xs = foldl (\x y -> y:x) [] xs 
+reverse' [] = []
+reverse' xs = helper xs [] where
+              helper [] acc = acc
+              helper (x:xs) acc = helper xs (x:acc)
+             
+--reverse' :: [a] -> [a]
+--reverse' xs = foldl (\x y -> y:x) [] xs 
 
 --7
 length':: [a] -> Integer
