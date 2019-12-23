@@ -6,7 +6,7 @@ instance (Eq a) => Eq (Complex a) where
 instance (Show a) => Show (Complex a) where
  (show) (Complex r i) = (show r) ++ " " ++ (show i) ++ "i" 
 
-instance (Num a) => Num (Complex a) where
+instance (Num a, Ord a) => Num (Complex a) where
  (*) (Complex r1 i1) (Complex r2 i2) = Complex (r1*r2) (i1*i2)
  (+) (Complex r1 i1) (Complex r2 i2) = Complex (r1+r2) (i1+i2)
  (abs) (Complex r i) | (r < 0 && i < 0) = Complex (r*(-1)) (i*(-1))
@@ -17,6 +17,7 @@ instance (Num a) => Num (Complex a) where
                         | r == 0 = 0
                         | otherwise = -1
  (negate) (Complex r i) = (Complex (-1*r) (-1*i))
+ (fromInteger) x = (Complex (fromInteger x) 0 )
 
 data QuantymState a = QuantymState a String
 
@@ -48,8 +49,8 @@ toPairList qub = [(com,str) | (QuantymState com str) <- qub]
 fromPairList:: [(Complex a,String)] -> Qubit (Complex a)
 fromPairList pairs = [ (QuantymState x y) | (x,y) <- pairs]
 
-scalarProduct:: Qubit (Complex a) ->Qubit (Complex a) -> Complex a
-scalarProduct qub1 qub2 = foldl (+) (zipWith (*) (toList qub1) (toList qub2))
+scalarProduct:: (Num a, Ord a) => Qubit (Complex a) ->Qubit (Complex a) -> Complex a
+scalarProduct qub1 qub2 = foldl (+) 0 (zipWith (*) (toList qub1) (toList qub2))
 
-entagle:: Qubit (Complex a) -> Qubit (Complex a) -> Qubit (Complex a)
+entagle:: (Num a, Ord a) => Qubit (Complex a) -> Qubit (Complex a) -> Qubit (Complex a)
 entagle qub1 qub2 = [(QuantymState (complex1*complex2) (label1 ++ label2)) | (QuantymState complex1 label1) <- qub1, (QuantymState complex2 label2) <- qub2]
