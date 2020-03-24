@@ -1,5 +1,4 @@
-# fltkhs-hello-world
-This is a skeleton app to help get going with a FLTKHS native GUI application. To install clone this repo then do:
+Проект - биоритмы человека
+Он тут пока примитивненький, но дальше будет лучше)))
 
-    > stack build --flag fltkhs:bundled
-    > stack exec fltkhs-hello-world
+Тут в первые три ячейки вводится дата рождения, а в другие три день на который вы хотите узнать прогноз
